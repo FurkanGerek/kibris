@@ -9,12 +9,11 @@ export default () => {
             </span>
         </div>
 
-        <div className="w-1/5 relative">
+        <div className="w-1/5 relative aspect-square">
             <img
                 src="https://www.elityavru.com/images/blog/munchkin-kedisi.webp"
                 alt=""
                 className="w-full h-full object-cover rounded"
-                style={{ aspectRatio: '1 / 1' }}
             />
         </div>
     </div>

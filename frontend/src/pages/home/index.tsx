@@ -2,6 +2,8 @@ import { useEffect } from "react"
 import Slider from "~/components/Slider"
 import News from "~/pages/home/components/News"
 import Side from "~/pages/home/components/Side"
+import Conflict from "~/pages/home/components/Conflict"
+import Book from "~/pages/home/components/Book"
 import { get } from "~/requests"
 export default () => {
 
@@ -35,6 +37,35 @@ export default () => {
                 </div>
             </div>
             <Side />
+
+
         </div>
+
+
+        <div className="flex-col px-20 py-5 gap-6">
+            <h1 className="text-xl border-b-3 border-red-500 pb-2 w-full">
+                Kıbrıs Uyuşmazlığı
+            </h1>
+
+            <div className="grid grid-cols-2 gap-2 pt-2">
+                <Conflict />
+                <Conflict />
+                <Conflict />
+                <Conflict />
+                <Conflict />
+                <Conflict />
+            </div>
+        </div>
+
+        <div className="flex-col px-20 py-5 gap-6">
+            <h1 className="text-xl border-b-3 border-red-500 pb-2 w-full">
+                Kitap Tanıtım
+            </h1>
+
+            <div className="grid grid-cols-3 gap-2 pt-2">
+                <Book /> <Book /> <Book />
+            </div>
+        </div>
+
     </div>
 }
