@@ -180,3 +180,24 @@ export const deletePost = async (req: Request, res: Response) => {
         res.status(500).json({ error: "Server error" });
     }
 };
+
+export const getLastByCategoryName = async (req: Request, res: Response) => {
+    try {
+        const { name } = req.params;
+        const limit = Number(req.query.limit) || 10;
+
+        const postRepository = db.getRepository(Post);
+
+        const posts = await postRepository.find({
+            where: { category: { name }, isApproved: true },
+            relations: ["user", "category"],
+            order: { id: "DESC" },
+            take: limit,
+        });
+
+        res.status(200).json({ posts });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "Server error" });
+    }
+};

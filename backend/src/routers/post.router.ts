@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { getAll, getByID, getByUser, postPost, putPost, deletePost, approvePost } from "~/controllers/post.controller";
+import { getAll, getByID, getByUser, postPost, putPost, deletePost, approvePost, getLastByCategoryName } from "~/controllers/post.controller";
 
 import validateMiddleware from "~/middlewares/validate.middleware";
 import checkPermission from "~/middlewares/checkPermission.middleware";
@@ -19,5 +19,6 @@ router.post("/", authMiddleware, checkPermission("canCreatePost"), uploadMiddlew
 router.put("/:id", authMiddleware, checkPermission("canEditPost"), uploadMiddleware.single("photo"), putPost)
 router.delete("/:id", authMiddleware, checkPermission("canDeletePost"), deletePost)
 router.post("/approve/:id", authMiddleware, checkPermission("canApprovePost"), approvePost)
+router.get("/:name/last", getLastByCategoryName);
 
 export default router

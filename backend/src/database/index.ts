@@ -27,7 +27,8 @@ const AppDataSource = new DataSource({
 
 export async function seedInitialData() {
     const roleRepo = AppDataSource.getRepository(Role);
-    const userRepo = AppDataSource.getRepository(User)
+    const userRepo = AppDataSource.getRepository(User);
+    const categoryRepo = AppDataSource.getRepository(Category);
 
     const roles = [
         { name: "superadmin", canCreatePost: true, canEditPost: true, canDeletePost: true, canApprovePost: true, canManagePages: true, canManageRoles: false },
@@ -39,34 +40,41 @@ export async function seedInitialData() {
     for (const r of roles) {
         const exists = await roleRepo.findOneBy({ name: r.name });
         if (!exists) {
-            const role = new Role();
-            role.name = r.name;
-            role.canCreatePost = r.canCreatePost;
-            role.canEditPost = r.canEditPost;
-            role.canDeletePost = r.canDeletePost;
-            role.canApprovePost = r.canApprovePost;
+            const role = roleRepo.create(r);
             await roleRepo.save(role);
         }
     }
-    const adminName = process.env.ADMIN_NAME
-    const adminEmail = process.env.ADMIN_EMAIL
-    const adminPassword = process.env.ADMIN_PASSWORD
 
-    const exists = await userRepo.findOneBy({ name: adminName, email: adminEmail })
+    const categories = [
+        { name: "Genel" },
+        { name: "Makale" },
+        { name: "Haber" },
+        { name: "Kitap" },
+    ];
 
+    for (const c of categories) {
+        const exists = await categoryRepo.findOneBy({ name: c.name });
+        if (!exists) {
+            const category = categoryRepo.create(c);
+            await categoryRepo.save(category);
+        }
+    }
+
+    const adminName = process.env.ADMIN_NAME;
+    const adminEmail = process.env.ADMIN_EMAIL;
+    const adminPassword = process.env.ADMIN_PASSWORD;
+
+    const exists = await userRepo.findOneBy({ name: adminName, email: adminEmail });
     if (!exists) {
-        const admin = new User()
-        admin.name = adminName!
-        admin.email = adminEmail!
-
-        const hashedPassword = await bcrypt.hash(adminPassword!, 10);
-        admin.password = hashedPassword
-
-        admin.roleId = 1
-
-        await userRepo.save(admin)
+        const admin = new User();
+        admin.name = adminName!;
+        admin.email = adminEmail!;
+        admin.password = await bcrypt.hash(adminPassword!, 10);
+        admin.roleId = 1;
+        await userRepo.save(admin);
     }
 }
+
 
 
 export default AppDataSource;
