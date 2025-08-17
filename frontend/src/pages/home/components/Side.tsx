@@ -1,7 +1,7 @@
 export default () => {
     return (
         // Arka plan beyaz yapıldı, gölge eklendi ve kenarlıklar kaldırıldı.
-        <aside className="w-96 bg-white shadow-sm rounded-lg p-4 flex flex-col gap-4">
+        <aside className="w-96 bg-white shadow-sm rounded-lg p-4 flex-col gap-4">
             {/* Başlık Stili Güncellendi */}
             <div className="flex flex-col self-start">
                 <h1 className="text-xl font-semibold text-gray-800">

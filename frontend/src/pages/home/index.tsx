@@ -35,10 +35,10 @@ export default () => {
                     <div className="flex flex-col gap-4">
                         <News />
                         <div className="grid grid-cols-2 gap-4 flex-1">
-                            <News />
-                            <News />
-                            <News />
-                            <News />
+                            <News tiny={true} />
+                            <News tiny={true} />
+                            <News tiny={true} />
+                            <News tiny={true} />
                         </div>
                     </div>
                 </div>
