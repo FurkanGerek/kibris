@@ -3,27 +3,26 @@ import Quill from "quill";
 import "quill/dist/quill.snow.css";
 
 interface TailwindQuillEditorProps {
-    onChange?: (content: string) => void; // HTML içeriği döndürür
+    value?: string; // Controlled içerik
+    onChange?: (content: string) => void; // HTML formatında döner
 }
 
 export interface TailwindQuillEditorRef {
-    clear: () => void;
+    clear: () => void; // Editörü temizleme
 }
 
 const TailwindQuillEditor = forwardRef<TailwindQuillEditorRef, TailwindQuillEditorProps>(
-    ({ onChange }, ref) => {
+    ({ value, onChange }, ref) => {
         const editorRef = useRef<HTMLDivElement | null>(null);
         const toolbarRef = useRef<HTMLDivElement | null>(null);
         const quillRef = useRef<Quill | null>(null);
 
+        // Ref ile dışa expose edilen fonksiyonlar
         useImperativeHandle(ref, () => ({
-            clear: () => {
-                if (quillRef.current) {
-                    quillRef.current.setContents([]); // Editörü temizle
-                }
-            },
+            clear: () => quillRef.current?.setContents([]),
         }));
 
+        // Quill Editor kurulumu
         useEffect(() => {
             if (editorRef.current && toolbarRef.current && !quillRef.current) {
                 const quill = new Quill(editorRef.current, {
@@ -35,17 +34,23 @@ const TailwindQuillEditor = forwardRef<TailwindQuillEditorRef, TailwindQuillEdit
                 });
 
                 quill.on("text-change", () => {
-                    if (onChange) {
-                        onChange(quill.root.innerHTML);
-                    }
+                    onChange?.(quill.root.innerHTML);
                 });
 
                 quillRef.current = quill;
             }
         }, [onChange]);
 
+        // Controlled value güncelleme
+        useEffect(() => {
+            if (quillRef.current && value !== undefined && value !== quillRef.current.root.innerHTML) {
+                quillRef.current.root.innerHTML = value;
+            }
+        }, [value]);
+
         return (
             <div className="w-full rounded-xl border border-gray-300 overflow-hidden">
+                {/* Toolbar */}
                 <div ref={toolbarRef} className="ql-toolbar bg-white border-b border-gray-200 p-2">
                     <span className="ql-formats">
                         <select className="ql-header" defaultValue="">
@@ -70,7 +75,11 @@ const TailwindQuillEditor = forwardRef<TailwindQuillEditorRef, TailwindQuillEdit
                     </span>
                 </div>
 
-                <div ref={editorRef} className="ql-container h-64 bg-gray-50 text-gray-800 p-4"></div>
+                {/* Editor */}
+                <div
+                    ref={editorRef}
+                    className="ql-container h-64 bg-gray-50 text-gray-800 p-4"
+                ></div>
             </div>
         );
     }
