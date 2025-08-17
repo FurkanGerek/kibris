@@ -5,13 +5,13 @@ import Side from "~/pages/home/components/Side"
 import Conflict from "~/pages/home/components/Conflict"
 import Book from "~/pages/home/components/Book"
 import { get } from "~/requests"
-export default () => {
 
+export default () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const data = await get("/post")
-                console.log(data) // artık Promise değil, gerçek veri
+                console.log(data)
             } catch (error) {
                 console.error("Error fetching posts:", error)
             }
@@ -20,52 +20,63 @@ export default () => {
         fetchData()
     }, [])
 
-    return <div>
-        <Slider />
-        <div className="flex px-20 py-5 gap-6">
-            <div className="flex gap-2 flex-col flex-1">
-                <h1 className="text-xl border-b-3 border-red-500 pb-2">
-                    Haberler
-                </h1>
+    return (
+        <div className="flex flex-col gap-8 py-8">
+            {/* items-start sınıfı ile sol ve sağ kutular yukarıdan hizalandı */}
+            <div className="flex gap-8 items-start">
+                <div className="flex flex-col gap-4 flex-1">
+                    <div className="flex flex-col self-start">
+                        <h1 className="text-xl font-semibold text-gray-800">
+                            Haberler
+                        </h1>
+                        <div className="mt-1 h-1 w-12 bg-red-600 rounded"></div>
+                    </div>
 
-                <News />
-                <div className="grid grid-cols-2 gap-2 flex-1">
-                    <News />
-                    <News />
-                    <News />
-                    <News />
+                    <div className="flex flex-col gap-4">
+                        <News />
+                        <div className="grid grid-cols-2 gap-4 flex-1">
+                            <News />
+                            <News />
+                            <News />
+                            <News />
+                        </div>
+                    </div>
+                </div>
+                <Side />
+            </div>
+
+            <div className="flex flex-col gap-4">
+                <div className="flex flex-col self-start">
+                    <h1 className="text-xl font-semibold text-gray-800">
+                        Kıbrıs Uyuşmazlığı
+                    </h1>
+                    <div className="mt-1 h-1 w-12 bg-red-600 rounded"></div>
+                </div>
+
+                <div className="grid grid-cols-2 gap-4">
+                    <Conflict />
+                    <Conflict />
+                    <Conflict />
+                    <Conflict />
+                    <Conflict />
+                    <Conflict />
                 </div>
             </div>
-            <Side />
 
+            <div className="flex flex-col gap-4">
+                <div className="flex flex-col self-start">
+                    <h1 className="text-xl font-semibold text-gray-800">
+                        Kitap Tanıtım
+                    </h1>
+                    <div className="mt-1 h-1 w-12 bg-red-600 rounded"></div>
+                </div>
 
-        </div>
-
-
-        <div className="flex-col px-20 py-5 gap-6">
-            <h1 className="text-xl border-b-3 border-red-500 pb-2 w-full">
-                Kıbrıs Uyuşmazlığı
-            </h1>
-
-            <div className="grid grid-cols-2 gap-2 pt-2">
-                <Conflict />
-                <Conflict />
-                <Conflict />
-                <Conflict />
-                <Conflict />
-                <Conflict />
+                <div className="grid grid-cols-3 gap-4">
+                    <Book />
+                    <Book />
+                    <Book />
+                </div>
             </div>
         </div>
-
-        <div className="flex-col px-20 py-5 gap-6">
-            <h1 className="text-xl border-b-3 border-red-500 pb-2 w-full">
-                Kitap Tanıtım
-            </h1>
-
-            <div className="grid grid-cols-3 gap-2 pt-2">
-                <Book /> <Book /> <Book />
-            </div>
-        </div>
-
-    </div>
+    )
 }

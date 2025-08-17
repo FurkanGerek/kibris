@@ -3,7 +3,8 @@ import { Link } from "react-router-dom"
 import NavLinks from "./NavLinks"
 
 export default () => {
-    return <header className="px-5 py-2 bg-gray-50 w-full flex items-center justify-between border-b-2 border-gray-300">
+    // Header'a z-index ve position eklendi
+    return <header className="px-5 py-2 bg-gray-50 w-full flex items-center justify-between border-b-2 border-gray-300 relative z-50 shadow-sm">
         <Link to="/">
             <img className="h-10" src={Logo} alt="Kıbrıs Kültür Derneği logo" />
         </Link>
@@ -19,7 +20,5 @@ export default () => {
             <NavLinks title="İletişim" menu={["Bize Ulaşın", "Ziyaretçi Defteri"]} />
             <NavLinks title="Üyelik Formu" />
         </nav>
-
-
     </header>
 }

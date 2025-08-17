@@ -12,7 +12,7 @@ export default function AnnouncementPage() {
     const [newAnnouncement, setNewAnnouncement] = useState("");
     const token = localStorage.getItem("token") || "";
 
-    // Mevcut duyuruları çek
+    // Mevcut duyuruları çekme 
     useEffect(() => {
         const fetchAnnouncements = async () => {
             try {

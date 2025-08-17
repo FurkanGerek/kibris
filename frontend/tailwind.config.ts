@@ -5,7 +5,8 @@ const config: Config = {
     theme: {
         extend: {
             fontFamily: {
-                helvetica: ['Helvetica', 'Arial', 'sans-serif'],
+                // CDN'den gelen font adını ve yedeklerini belirtiyoruz
+                sans: ['"Helvetica Neue"', 'Helvetica', 'Arial', 'sans-serif'],
             },
         },
     },
